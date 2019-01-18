@@ -14,10 +14,10 @@ namespace Keepr.Controllers
 
 
     //GetAll
-
+    [HttpGet]
 
     //GetById
-
+    [HttpGet("{id}")]
 
     //AddKeep
 

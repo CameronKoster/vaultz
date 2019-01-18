@@ -9,9 +9,27 @@ namespace Keepr.Repositories
 
 
 
-    public VaultRepository(Parameters)
-    {
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private readonly IDbConnection _db
+    public VaultRepository(int IDbConnection)
+    {
+      _db = db;
     }
   }
 }

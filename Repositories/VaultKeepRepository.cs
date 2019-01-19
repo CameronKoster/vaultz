@@ -1,5 +1,4 @@
-
-
+using System.Data;
 
 namespace Keepr.Repositories
 {
@@ -7,12 +6,23 @@ namespace Keepr.Repositories
   public class VaultKeepRepository
   {
 
+    //GetBooksByVaultId
+
+    //GetVaultByBookId
+
+    //GetVaultsByUserId
+
+    //GetKeepsByVaultId
 
 
 
-    public VaultKeepRepository(Parameters)
+
+
+    //constructor
+    private readonly IDbConnection db
+    public VaultKeepRepository(IDbConnection _db)
     {
-
+      _db = db;
     }
   }
 }

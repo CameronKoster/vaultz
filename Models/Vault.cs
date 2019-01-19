@@ -8,9 +8,6 @@ namespace Keepr.Models
     public int UserID { get; set; }
 
 
-    public Vault()
-    {
 
-    }
   }
 }

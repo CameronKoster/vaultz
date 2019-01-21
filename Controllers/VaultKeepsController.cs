@@ -21,12 +21,12 @@ namespace Keepr.Controllers
 
 
 
-    //GetVaultsByKeepId
-    [HttpGet("{keepId}")]
-    public IEnumerable<Vault> GetVaultsByKeepId(int keepId)
-    {
-      return _vaultKeepRepo.GetVaultsByKeepId(keepId);
-    }
+    // //GetVaultsByKeepId
+    // [HttpGet("{keepId}")]
+    // public IEnumerable<Vault> GetVaultsByKeepId(int keepId)
+    // {
+    //   return _vaultKeepRepo.GetVaultsByKeepId(keepId);
+    // }
 
 
 
@@ -34,6 +34,7 @@ namespace Keepr.Controllers
     [HttpPost]
     public ActionResult<VaultKeep> Post([FromBody] VaultKeep payload)  //want to add a string saying that you successfully added a Vault.
     {
+      payload.UserId = HttpContext.User.Identity.Name;
       VaultKeep response = _vaultKeepRepo.AddVaultKeep(payload);
       if (response == null) throw new Exception("Unable to create vault!");
       return response;
@@ -42,11 +43,11 @@ namespace Keepr.Controllers
 
 
     //DeleteVaultKeep
-    [HttpDelete("{id}")]
-    public ActionResult<string> DeleteVaultKeep(VaultKeep vk)
+    [HttpDelete]
+    public ActionResult<string> DeleteVaultKeep([FromBody]VaultKeep vk)
     {
       var result = _vaultKeepRepo.DeleteVaultKeep(vk);
-      if (result != null)
+      if (result == true)
       {
         return Ok("Successfully deleted!");
       }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Keepr.Models;
 using Keepr.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -40,11 +41,18 @@ namespace Keepr.Controllers
 
     //AddKeep
     [HttpPost]
+    [Authorize] //checks that user is logged in before entering the route
     public ActionResult<Keep> Post([FromBody] Keep payload)  //want to add a string saying that you successfully added a keep.
     {
+      payload.UserID = HttpContext.User.Identity.Name;
       Keep response = _keepRepo.AddKeep(payload);
-      if (response == null) throw new Exception("Unable to create keep!");
-      return response;
+      // if (response == null) throw new Exception("Unable to create keep!");
+      // return response;
+      if (response != null)
+      {
+        return Ok("Successfully added!");
+      }
+      return BadRequest("Unable to add. Try again later.");
     }
 
 

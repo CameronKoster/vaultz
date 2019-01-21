@@ -11,16 +11,11 @@ namespace Keepr.Controllers
 
   public class VaultsController : ControllerBase
   {
-    //GetAll
-    // [HttpGet]
-    // public ActionResult<IEnumerable<Vault>> Get()
-    // {
-    //   return Ok(_vaultRepo.GetAllVaults());
-    // }
+
 
     //GetVaultsByUserId
     [HttpGet("{userId}")]
-    public ActionResult<IEnumerable<Vault>> Get(int userId)
+    public ActionResult<IEnumerable<Vault>> Get(string userId)
     {
       var response = _vaultRepo.GetVaultsByUserId(userId);
       if (response != null)
@@ -30,19 +25,25 @@ namespace Keepr.Controllers
       return BadRequest();
     }
 
+
+
     //AddVault
     [HttpPost]
     public ActionResult<Vault> Post([FromBody] Vault payload)  //want to add a string saying that you successfully added a Vault.
     {
+      payload.UserID = HttpContext.User.Identity.Name;
       Vault response = _vaultRepo.AddVault(payload);
       if (response == null) throw new Exception("Unable to create vault!");
       return response;
     }
 
+
+
     //DeleteVault
     [HttpDelete("{vaultId}")]
     public ActionResult<string> Delete(int vaultId)
     {
+
       if (_vaultRepo.DeleteVault(vaultId))
       {
         return Ok("Successfully deleted!");

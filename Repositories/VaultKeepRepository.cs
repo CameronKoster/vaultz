@@ -13,22 +13,22 @@ namespace Keepr.Repositories
     {
       return _db.Query<Keep>(@"
        SELECT * FROM vaultkeeps vk
-       INNER Join Keep k ON k.id = vk.keepId
-       WHERE(vaultId = @vaultId AND vk.userId = @userId);
+       INNER JOIN keeps k ON k.id = vk.keepId
+       WHERE(vk.vaultId = @VaultId);
        ", new { vaultId });
     }
 
 
 
-    //GetVaultByKeepId
-    public IEnumerable<Vault> GetVaultsByKeepId(int keepId)
-    {
-      return _db.Query<Vault>($@"
-        SELECT * FROM vaultkeeps vk
-        INNER JOIN Vault v ON v.id = vk.vaultId
-        WHERE (keepId = @keepid);
-      ", new { keepId });
-    }
+    // //GetVaultByKeepId
+    // public IEnumerable<Vault> GetVaultsByKeepId(int keepId)
+    // {
+    //   return _db.Query<Vault>($@"
+    //     SELECT * FROM vaultkeeps vk
+    //     INNER JOIN Vault v ON v.id = vk.vaultId
+    //     WHERE (keepId = @keepid);
+    //   ", new { keepId });
+    // }
 
 
 
@@ -37,8 +37,8 @@ namespace Keepr.Repositories
     public VaultKeep AddVaultKeep(VaultKeep vk)
     {
       int id = _db.ExecuteScalar<int>(@"
-      INSERT INTO vaultkeeps(vaultId, keepId)
-      VALUES(@VaultId, @KeepId);
+      INSERT INTO vaultkeeps(vaultId, keepId, userId)
+      VALUES(@VaultId, @KeepId, @UserId);
       SELECT LAST_INSERT_ID();
       ", vk);
       vk.Id = id;

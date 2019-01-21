@@ -12,21 +12,24 @@ namespace Keepr.Repositories
     //GetAll
     public IEnumerable<Keep> GetAllKeeps()
     {
-      return _db.Query<Keep>("SELECT * FROM Keep");
+      return _db.Query<Keep>("SELECT * FROM keeps WHERE IsPrivate = 0");
     }
 
-    //GetById
-    public Keep GetById(int id)
+
+
+    //GetKeepsByUserId
+    public IEnumerable<Keep> GetKeepsByUserId(int id)
     {
-      return _db.QueryFirstOrDefault<Keep>($"SELECT * FROM Keep WHERE id = @id", new { id });
+      return _db.Query<Keep>($"SELECT * FROM keeps WHERE id = @id", new { id });
     }
+
 
 
     //AddKeep
     public Keep AddKeep(Keep newKeep)
     {
       int id = _db.ExecuteScalar<int>(@"
-     INSERT INTO Keep(name,img,description,views,userId,isprivate,keeps)
+     INSERT INTO keeps(name,img,description,views,userId,isprivate,keeps)
      VALUES(@Name,@Img,@Description,@Views,@UserId,@IsPrivate,@Keeps);
      SELECT LAST_INSERT_ID();
      ", newKeep);
@@ -34,12 +37,16 @@ namespace Keepr.Repositories
       return newKeep;
     }
 
+
+
     //DeleteKeep
     public bool DeleteKeep(int id)
     {
-      int successfullyDeleted = _db.Execute(@"DELETE FROM Keep WHERE id = @id", new { id });
+      int successfullyDeleted = _db.Execute(@"DELETE FROM keeps WHERE id = @id", new { id });
       return successfullyDeleted != 0;
     }
+
+
 
     //constructor
     private readonly IDbConnection _db;

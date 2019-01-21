@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Keepr.Models;
 using Keepr.Repositories;
@@ -15,19 +16,20 @@ namespace Keepr.Controllers
   {
 
 
-    //GetAll
+    //GetAllKeeps //only where public
     [HttpGet]
-    public ActionResult<IEnumerable<Keep>> Get()
+    public ActionResult<IEnumerable<Keep>> GetAllKeeps()
     {
       return Ok(_keepRepo.GetAllKeeps());
     }
 
 
-    //GetById
-    [HttpGet("{id}")]
-    public ActionResult<Keep> Get(int id)
+
+    //GetKeepsByUserId
+    [HttpGet("{userId}")]
+    public ActionResult<IEnumerable<Keep>> Get(int userId)
     {
-      Keep response = _keepRepo.GetById(id);
+      var response = _keepRepo.GetKeepsByUserId(userId);
       if (response != null)
       {
         return Ok(response);
@@ -41,19 +43,24 @@ namespace Keepr.Controllers
     public ActionResult<Keep> Post([FromBody] Keep payload)  //want to add a string saying that you successfully added a keep.
     {
       Keep response = _keepRepo.AddKeep(payload);
-      return Created("/api/keep/" + response.Id, response);
+      if (response == null) throw new Exception("Unable to create keep!");
+      return response;
     }
 
+
+
     //DeleteKeep
-    [HttpDelete]
-    public ActionResult<string> Delete(int id)
+    [HttpDelete("{keepId}")]
+    public ActionResult<string> Delete(int keepId)
     {
-      if (_keepRepo.DeleteKeep(id))
+      if (_keepRepo.DeleteKeep(keepId))
       {
         return Ok("Successfully deleted!");
       }
       return BadRequest("Unable to delete. Try again later.");
     }
+
+
 
     //constructor
     private readonly KeepRepository _keepRepo;

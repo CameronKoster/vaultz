@@ -9,35 +9,44 @@ namespace Keepr.Repositories
   public class VaultRepository
   {
     //GetAll
-    public IEnumerable<Vault> GetAllVaults()
+    // public IEnumerable<Vault> GetAllVaults()
+    // {
+    //   return _db.Query<Vault>("SELECT * FROM Vault");
+    // }
+
+
+
+    //GetVaultsByUserId
+    public IEnumerable<Vault> GetVaultsByUserId(int id)
     {
-      return _db.Query<Vault>("SELECT * FROM Vault");
+      return _db.Query<Vault>($"SELECT * FROM vaults WHERE id = @id", new { id });
     }
 
-    //GetById
-    public Vault GetById(int id)
-    {
-      return _db.QueryFirstOrDefault<Vault>($"SELECT * FROM Vault WHERE id = @id", new { id });
-    }
 
-    //AddVault
+
+    //AddVault //need to make sure that all of my capitalization is correct
     public Vault AddVault(Vault newVault)
     {
       int id = _db.ExecuteScalar<int>(@"
-     INSERT INTO Vault(name,description,userId)
+     INSERT INTO vaults(name,description,userId)
      VALUES(@Name,@Description,@UserId);
-     SELECT LAST_INSERT_ID();
+     SELECT LAST_INSERT_ID()
      ", newVault);
       newVault.Id = id;
       return newVault;
     }
 
+
+
     //DeleteVault
     public bool DeleteVault(int id)
     {
-      int successfullyDeleted = _db.Execute(@"DELETE FROM Vault WHERE id = @id", new { id });
+      int successfullyDeleted = _db.Execute(@"DELETE FROM vaults WHERE id = @id", new { id });
       return successfullyDeleted != 0;
     }
+
+
+
     //contructor
     private readonly IDbConnection _db;
     public VaultRepository(IDbConnection db)

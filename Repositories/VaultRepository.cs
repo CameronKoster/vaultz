@@ -8,11 +8,11 @@ namespace Keepr.Repositories
 
   public class VaultRepository
   {
-    //GetAll
-    // public IEnumerable<Vault> GetAllVaults()
-    // {
-    //   return _db.Query<Vault>("SELECT * FROM Vault");
-    // }
+    // GetAllVaults
+    public IEnumerable<Vault> GetAllVaults()
+    {
+      return _db.Query<Vault>("SELECT * FROM vaults");
+    }
 
 
 

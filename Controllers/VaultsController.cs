@@ -12,6 +12,12 @@ namespace Keepr.Controllers
   public class VaultsController : ControllerBase
   {
 
+    //GetAllVaults //only where public
+    [HttpGet]
+    public ActionResult<IEnumerable<Vault>> GetAllVaults()
+    {
+      return Ok(_vaultRepo.GetAllVaults());
+    }
 
     //GetVaultsByUserId
     [HttpGet("{userId}")]

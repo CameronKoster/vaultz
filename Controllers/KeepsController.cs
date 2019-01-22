@@ -27,16 +27,13 @@ namespace Keepr.Controllers
 
 
     //GetKeepsByUserId
-    [HttpGet("{userId}")]
-    public ActionResult<IEnumerable<Keep>> Get(int userId)
+    [HttpGet("user")]
+    public IEnumerable<Keep> Get()
     {
-      var response = _keepRepo.GetKeepsByUserId(userId);
-      if (response != null)
-      {
-        return Ok(response);
-      }
-      return BadRequest();
+      string uid = HttpContext.User.Identity.Name;
+      return _keepRepo.GetKeepsByUserId(uid);
     }
+
 
 
     //AddKeep

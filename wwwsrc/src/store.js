@@ -19,11 +19,15 @@ let api = Axios.create({
 
 export default new Vuex.Store({
   state: {
-    user: {}
+    user: {},
+    publicKeeps: []
   },
   mutations: {
     setUser(state, user) {
       state.user = user
+    },
+    setPublicKeeps(state, publicKeeps) {
+      state.publicKeeps = publicKeeps
     }
   },
   actions: {
@@ -62,6 +66,12 @@ export default new Vuex.Store({
         .then(res => {
           commit("setUser")
           router.push({ name: 'login' })
+        })
+    },
+    getAllPublicKeeps({ commit, dispatch }) {
+      api.get('getAllPublicKeeps')
+        .then(res => {
+          commit("setPublicKeeps")
         })
     }
   }

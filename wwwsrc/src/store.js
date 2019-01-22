@@ -56,6 +56,13 @@ export default new Vuex.Store({
         .catch(e => {
           console.log('Login Failed')
         })
+    },
+    logout({ commit, dispatch }) {
+      auth.delete('logout')
+        .then(res => {
+          commit("setUser")
+          router.push({ name: 'login' })
+        })
     }
   }
 })

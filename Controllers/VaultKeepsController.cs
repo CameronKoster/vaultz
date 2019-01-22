@@ -21,12 +21,7 @@ namespace Keepr.Controllers
 
 
 
-    // //GetVaultsByKeepId
-    // [HttpGet("{keepId}")]
-    // public IEnumerable<Vault> GetVaultsByKeepId(int keepId)
-    // {
-    //   return _vaultKeepRepo.GetVaultsByKeepId(keepId);
-    // }
+
 
 
 
@@ -43,7 +38,7 @@ namespace Keepr.Controllers
 
 
     //DeleteVaultKeep
-    [HttpDelete]
+    [HttpPut]
     public ActionResult<string> DeleteVaultKeep([FromBody]VaultKeep vk)
     {
       var result = _vaultKeepRepo.DeleteVaultKeep(vk);

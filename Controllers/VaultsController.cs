@@ -13,23 +13,38 @@ namespace Keepr.Controllers
   {
 
     //GetAllVaults //only where public
-    [HttpGet]
-    public ActionResult<IEnumerable<Vault>> GetAllVaults()
-    {
-      return Ok(_vaultRepo.GetAllVaults());
-    }
+    // [HttpGet]
+    // public ActionResult<IEnumerable<Vault>> GetAllVaults()
+    // {
+    //   return Ok(_vaultRepo.GetAllVaults());
+    // }
 
     //GetVaultsByUserId
-    [HttpGet("{userId}")]
-    public ActionResult<IEnumerable<Vault>> Get(string userId)
+
+
+
+    [HttpGet]
+    public IEnumerable<Vault> GetVaultsByUserId()
     {
-      var response = _vaultRepo.GetVaultsByUserId(userId);
-      if (response != null)
+      string uid = HttpContext.User.Identity.Name;
+      return _vaultRepo.GetVaultsByUserId(uid);
+    }
+
+
+
+    //GetAVaultByVaultId
+    [HttpGet("{id}")]
+    public ActionResult<Vault> Get(int id)
+    {
+      Vault result = _vaultRepo.GetVaultById(id);
+      if (result != null)
       {
-        return Ok(response);
+        return Ok(result);
       }
       return BadRequest();
     }
+
+
 
 
 

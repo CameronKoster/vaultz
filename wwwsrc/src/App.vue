@@ -4,6 +4,16 @@
   </div>
 </template>
 
+<script>
+  export default {
+    name: "app",
+    mounted() {
+      //checks for valid session
+      this.$store.dispatch("authenticate");
+    }
+  }
+</script>
+
 <style>
   #app {
     font-family: "Avenir", Helvetica, Arial, sans-serif;

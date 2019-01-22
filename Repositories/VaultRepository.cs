@@ -8,20 +8,28 @@ namespace Keepr.Repositories
 
   public class VaultRepository
   {
-    // GetAllVaults
-    public IEnumerable<Vault> GetAllVaults()
-    {
-      return _db.Query<Vault>("SELECT * FROM vaults");
-    }
+    // // GetAllVaults
+    // public IEnumerable<Vault> GetAllVaults()
+    // {
+    //   return _db.Query<Vault>("SELECT * FROM vaults");
+    // }
 
 
 
     //GetVaultsByUserId
+
+
     public IEnumerable<Vault> GetVaultsByUserId(string id)
     {
-      return _db.Query<Vault>($"SELECT * FROM vaults WHERE userId = @id", new { id });
+      return _db.Query<Vault>("SELECT * FROM vaults WHERE userId = @id", new { id });
     }
 
+
+    //GetAVaultByVaultId
+    public Vault GetVaultById(int id)
+    {
+      return _db.QueryFirstOrDefault<Vault>($"SELECT * FROM vaults WHERE id = @id", new { id });
+    }
 
 
 

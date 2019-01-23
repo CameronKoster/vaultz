@@ -1,49 +1,80 @@
 <template>
-  <div class="home">
-    <navbar />
-
-
-    <div>
-      <button type="button" @click="logout">Logout</button>
+  <div class="home container-fluid">
+    <Navbar />
+    <div class="row">
+      <Keeps v-for="keep in publicKeeps" :keep="keep" />
     </div>
   </div>
 </template>
 
 <script>
   import Navbar from "@/components/Navbar.vue";
+  import Keeps from "@/components/Keeps.vue";
+
   export default {
     name: "home",
+    //Data
     data() {
       return {
 
       }
     },
+    //Components
     components: {
-      Navbar
+      Navbar,
+      Keeps
+
     },
+    //COMPUTED
     computed: {
       publicKeeps() {
         return this.$store.state.publicKeeps;
-      }
-    },
-    mounted() {
-      //blocks users not logged in
-      if (!this.$store.state.user.id) {
-        this.$router.push({ name: "login" });
+      },
+      user() {
+        return this.$store.state.user;
       }
 
-      this.$store.dispatch("getAllPublicKeeps")
     },
+    //Mounted
+    mounted() {
+
+      if (!this.$store.state.user.id) {
+        this.$router.push({ name: "login" }); //blocks users not logged in
+      }
+
+
+      this.$store.dispatch("getPublicKeeps");
+    },
+    //METHODS
     methods: {
+
       logout() {
         this.$store.dispatch("logout")
+      },
+      // viewKeep() {
+
+      // },
+      addKeep(newKeep) {
+        this.$store.dispatch("addKeep", newKeep);
+      },
+
+      deleteKeep(keep) {
+        this.$store.dispatch("deleteKeep", keep);
+      },
+
+      viewSelectedKeep() {
+
+      },
+
+      getPublicKeeps() {
+        this.$store.dispatch("getPublicKeeps")
+      },
+
+      getUserKeeps(user) {
+        this.$store.dispatch("getUserKeeps", user)
       }
     },
-    getAllPublicKeeps() {
-      this.$store.dispatch("getAllPublicKeeps")
-    },
-    createAccount() {
 
-    }
+
   };
 </script>

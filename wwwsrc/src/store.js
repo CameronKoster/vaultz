@@ -17,20 +17,37 @@ let api = Axios.create({
   withCredentials: true
 })
 
+
+
+
+
 export default new Vuex.Store({
+  //STATE
   state: {
     user: {},
-    publicKeeps: []
+    publicKeeps: [],
+    userKeeps: [],
+    userVaults: []
   },
+  //MUTATIONS
   mutations: {
     setUser(state, user) {
       state.user = user
     },
     setPublicKeeps(state, publicKeeps) {
       state.publicKeeps = publicKeeps
+    },
+    setUserKeeps(state, userKeeps) {
+      state.userKeeps = userKeeps
+    },
+    setUserVaults(state, userVaults) {
+      state.userVaults = userVaults
     }
   },
+  //ACTIONS
   actions: {
+
+    //Auth
     register({ commit, dispatch }, newUser) {
       auth.post('register', newUser)
         .then(res => {
@@ -41,6 +58,7 @@ export default new Vuex.Store({
           console.log('[registration failed] :', e)
         })
     },
+
     authenticate({ commit, dispatch }) {
       auth.get('authenticate')
         .then(res => {
@@ -51,6 +69,7 @@ export default new Vuex.Store({
           console.log('not authenticated')
         })
     },
+
     login({ commit, dispatch }, creds) {
       auth.post('login', creds)
         .then(res => {
@@ -61,6 +80,7 @@ export default new Vuex.Store({
           console.log('Login Failed')
         })
     },
+
     logout({ commit, dispatch }) {
       auth.delete('logout')
         .then(res => {
@@ -68,11 +88,55 @@ export default new Vuex.Store({
           router.push({ name: 'login' })
         })
     },
-    getAllPublicKeeps({ commit, dispatch }) {
-      api.get('getAllPublicKeeps')
+
+
+    //Keeps
+    getPublicKeeps({ commit, dispatch }) {
+      api.get('keeps')
         .then(res => {
-          commit("setPublicKeeps")
+          commit("setPublicKeeps", res.data)
+        })
+    },
+
+    // getUserKeeps({ commit, dispatch }, user) {
+    //   api.get("keeps/user", user) //check replacement for user
+    //     .then(res => {
+    //       commit("setUserKeeps", user)
+    //     })
+    // },
+
+    addPublicKeep({ commit, dispatch }, keep) {
+      api.post("keeps", keep)
+        .then(res => {
+          dispatch("getPublicKeeps")
+        })
+    },
+
+    addKeepToVault() {
+
+    }
+
+    // deleteKeep({ commit, dispatch }, keep) {
+    //   api.delete("keeps/:keepid")
+    // },
+
+
+
+    //Vaults
+    getUserVaults({ commit, dispatch }, userId) {
+      api.get("vaults", userId)
+        .then(res => {
+          commit("setUserVaults", res.data)
+        })
+    },
+    addVault({ commit, dispatch }, newVault) {
+      api.post("vaults", newVault)
+        .then(res => {
+          dispatch("getUserVaults")
         })
     }
+
+
+
   }
 })

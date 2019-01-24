@@ -9,10 +9,16 @@
         <h1>{{keep.name}}</h1>
       </div>
       <div class="card-body d-flex justify-content-space-between">
-        <button onclick="//increase views">View</button>
-        <button onclick="//increase keeps">Keep</button>
-        <button onclick="//increase shares">Share</button>
-        <button @click="deleteKeep(keep.id)">Delete</button>
+        <!-- <button onclick="">View</button>
+        <button onclick="">Keep</button>
+        <button onclick="">Share</button> -->
+        <i @click="" class="far fa-eye"></i>
+        <i @click="addKeepToVault(keep.id, vault.id)" class="fab fa-korvue"></i></i>
+        <i @click="" class="fas fa-retweet"></i>
+        <i @click="deleteKeep(keep.id)" class="fas fa-trash-alt"></i>
+        <button @click="viewActiveKeep(keep.id)">View</button>
+        <!-- Need to do a v-if to display a modal of larger keep -->
+
       </div>
     </div>
   </div>
@@ -31,18 +37,20 @@
 
     },
     computed: {
-
+      activeKeep() {
+        return this.$store.state.activeKeep
+      }
     },
     mounted() {
       this.$store.state.publicKeeps;
     },
     methods: {
-      viewActiveKeep() {
-        this.$store.dispatch("viewActiveKeep", keep)
+      viewActiveKeep(keepid) {
+        this.$store.dispatch("activeKeep", keepid)
       },
-      // addKeepToVault() {
-
-      // },
+      addKeepToVault(keepid, vaultid) {
+        this.$store.dispatch("addKeepToVault", keepid, vaultid)
+      },
 
       deleteKeep(keepid) {
         this.$store.dispatch("deleteKeep", keepid);

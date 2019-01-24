@@ -21,7 +21,7 @@
 
 <script>
   import Navbar from "@/components/Navbar.vue"
-  import Keeps from "@/componentts/Keeps.vue"
+  import Keeps from "@/components/Keeps.vue"
   export default {
     name: 'UserKeeps',
     data() {

@@ -57,6 +57,9 @@
       getUserVaults() {
         this.$store.dispatch("getUserVaults")
       },
+      getVaultKeeps(vaultid) {
+        this.$store.dispatch("getVaultKeeps", vaultid)
+      },
       addVault(newVault) {
         this.$store.dispatch("addVault", this.newVault) //need to pass newVault and an userId to add vault into
         //do I add the userId into data or pass it another way?

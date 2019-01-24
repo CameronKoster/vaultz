@@ -53,6 +53,15 @@ namespace Keepr.Controllers
     }
 
 
+    //EditKeep
+    [Authorize]
+    [HttpPut("{keepid}")]
+    public Keep Put(int keepId, [FromBody] Keep keep)
+    {
+      keep.Id = keepId;
+      keep.UserID = HttpContext.User.Identity.Name;
+      return _keepRepo.EditKeep(keep);
+    }
 
     //DeleteKeep
     [HttpDelete("{keepId}")]

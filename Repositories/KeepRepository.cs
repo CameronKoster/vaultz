@@ -24,7 +24,21 @@ namespace Keepr.Repositories
       return _db.Query<Keep>("SELECT * FROM keeps WHERE userId = @id", new { id });
     }
 
-
+    //EditKeep
+    public Keep EditKeep(Keep newkeep)
+    {
+      _db.Execute($@"
+          UPDATE keeps SET
+          name= @Name,
+          description = @Description,
+          isPrivate = @IsPrivate,
+          img = @Img,
+          keeps=@keeps,
+          views=@views
+         WHERE id = @Id AND userId =@userId;
+        ", newkeep);
+      return newkeep;
+    }
 
     //AddKeep
     public Keep AddKeep(Keep newKeep)

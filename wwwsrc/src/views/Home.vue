@@ -4,7 +4,7 @@
     <div class="row">
       <Keeps v-for="keep in publicKeeps" :keep="keep" />
     </div>
-    <h1>no public keeps currently</h1>
+    <h1>home</h1>
   </div>
 </template>
 

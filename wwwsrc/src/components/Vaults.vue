@@ -14,6 +14,10 @@
         <div>
           <!-- <button onclick="//run viewKeep">View</button> -->
           <button @click="deleteVault(vault.id)">Delete</button>
+          <div>
+            <button @click="$router.push({name: 'vaultkeeps', params: {vaultId: vault.id}})">View Keeps</button>
+          </div>
+          <!-- <button @click="getVaultKeeps(vault.id)">View Keeps</button> -->
         </div>
       </div>
     </div>
@@ -39,6 +43,9 @@
     computed: {
       Vaults() {
         return this.$store.state.userVaults
+      },
+      vaultKeeps() {
+        return this.$store.state.vaultKeeps
       }
     },
     //Mounted
@@ -51,7 +58,10 @@
         this.$store.dispatch("getUserVaults", userId)
       },
       deleteVault() {
-        this.$store.dispatch("deleteVault", vaultid)
+        this.$store.dispatch("deleteVault", this.vault.id)
+      },
+      getVaultKeeps(vaultid) {
+        this.$store.dispatch("getVaultKeeps", vaultid)
       }
     }
   }

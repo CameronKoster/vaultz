@@ -28,7 +28,8 @@ export default new Vuex.Store({
     publicKeeps: [],
     userKeeps: [],
     userVaults: [],
-    activeKeep: {}
+    activeKeep: {},
+    vaultKeep: []
   },
   //MUTATIONS
   mutations: {
@@ -47,6 +48,9 @@ export default new Vuex.Store({
     setActiveKeep(state, activeKeep) {
       state.activeKeep = activeKeep
     },
+    setVaultKeep(state, vaultKeep) {
+      state.vaultKeep = vaultKeep
+    }
   },
   //ACTIONS
   actions: {
@@ -117,23 +121,37 @@ export default new Vuex.Store({
     },
 
     activeKeep({ commit, dispatch }, keepid) {
+      //this should api.put request to increment the views of the keep with keepid
+      //then can save the returned updated keep as the state.activeKeep and trigger a modal open
       api.get("keep/" + keepid)
         .then(res => {
           commit("setActiveKeep", res.data)
         })
     },
 
-    addKeepToVault({ commit, dispatch }, keepAddedToVault) { //need help on this
-      api.post("vaultkeeps/", keepAddedToVault)
+
+
+
+
+
+    addKeepToVault({ commit, dispatch }, payload) { //need help on this
+      api.post("vaultkeeps/", payload)
         .then(res => {
-          dispatch("getVaultKeeps", keepAddedToVault.vaultid)
+
+          dispatch("getVaultKeeps", payload.vaultId)
         })
     },
+
+
+
+
+
 
     deleteKeep({ commit, dispatch }, keepid) {
       api.delete("keeps/" + keepid)
         .then(res => {
           dispatch("getPublicKeeps")
+          dispatch("getUserKeeps")
         })
     },
 
@@ -162,7 +180,19 @@ export default new Vuex.Store({
 
     //VaultKeeps
     getVaultKeeps({ commit, dispatch }, vaultid) { //need help with this
-      api.get("vaultkeeps/" + vault.id)
+      api.get("vaultkeeps/" + vaultid, vaultid)
+        .then(res => {
+          console.log(res)
+          commit("setVaultKeep", res.data)
+          // commit("setActiveVault", vaultid)
+        })
+    },
+    deleteVaultKeeps({ commit, dispatch }, vaultid) {
+      api.put("/vaultkeeps" + vaultid)
+        .then(res => {
+
+          dispatch("getVaultKeeps")
+        })
     }
   }
 })

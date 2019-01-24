@@ -43,11 +43,11 @@
         return this.$store.state.user;
       },
       userKeeps() {
-        return this.$store.state.userKeeps
+        return this.$store.state.userKeeps;
       }
     },
     mounted() {
-      this.$store.state.userKeeps
+      this.$store.dispatch("getUserKeeps")
     },
     methods: {
       addKeep() {

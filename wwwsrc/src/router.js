@@ -10,6 +10,8 @@ import Dashboard from './views/Dashboard.vue'
 import UserVaults from './views/UserVaults.vue'
 // @ts-ignore
 import UserKeeps from './views/UserKeeps.vue'
+// @ts-ignore
+import VaultKeeps from './views/VaultKeeps.vue'
 
 Vue.use(Router)
 
@@ -39,6 +41,12 @@ export default new Router({
       path: '/userkeeps',
       name: 'userkeeps',
       component: UserKeeps
+    },
+    {
+      path: '/vaultkeeps/:vaultId',
+      name: 'vaultkeeps',
+      props: true,
+      component: VaultKeeps
     }
   ]
 })

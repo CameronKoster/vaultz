@@ -11,10 +11,10 @@
               <router-link class="font" to="/dashboard">Dashboard</router-link>
             </div>
             <div class="col">
-              <router-link @click.native='login()' class="font" to="/login">Login/Register</router-link>
+              <router-link @click='login()' class="font" to="/login">Login/Register</router-link>
             </div>
             <div class="col">
-              <router-link @click.native='logout()' class="font" to="/login">Logout</router-link>
+              <router-link @click='logout()' class="font" to="/login">Logout</router-link>
             </div>
           </div>
         </div>

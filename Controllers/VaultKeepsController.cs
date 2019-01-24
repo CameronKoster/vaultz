@@ -14,8 +14,10 @@ namespace Keepr.Controllers
 
     //GetKeepsByVaultId
     [HttpGet("{vaultId}")]
+
     public IEnumerable<Keep> GetKeepsByVaultId(int vaultId)
     {
+      // var id = HttpContext.User.Identity.Name;
       return _vaultKeepRepo.GetKeepsByVaultId(vaultId);
     }
 

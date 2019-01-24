@@ -41,9 +41,9 @@ namespace Keepr.Repositories
 
 
     //DeleteKeep
-    public bool DeleteKeep(int id)
+    public bool DeleteKeep(int keepId, string userId)
     {
-      int successfullyDeleted = _db.Execute(@"DELETE FROM keeps WHERE id = @id", new { id });
+      int successfullyDeleted = _db.Execute(@"DELETE FROM keeps WHERE id = @keepId && userid = @userId", new { keepId, userId });
       return successfullyDeleted != 0;
     }
 

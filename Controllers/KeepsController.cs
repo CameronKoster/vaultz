@@ -58,7 +58,8 @@ namespace Keepr.Controllers
     [HttpDelete("{keepId}")]
     public ActionResult<string> Delete(int keepId)
     {
-      if (_keepRepo.DeleteKeep(keepId))
+      string uid = HttpContext.User.Identity.Name;
+      if (uid != null && _keepRepo.DeleteKeep(keepId, uid))
       {
         return Ok("Successfully deleted!");
       }

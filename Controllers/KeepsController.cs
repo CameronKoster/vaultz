@@ -66,6 +66,22 @@ namespace Keepr.Controllers
     }
 
 
+    //EditKeep
+    [HttpPut("{id}")]
+    public ActionResult<Keep> Put(int id, [FromBody] Keep keep)
+    {
+      try
+      {
+        Keep editedKeep = _keepRepo.EditKeep(id, keep);
+        return editedKeep;
+      }
+      catch (Exception ex)
+      {
+        Console.WriteLine(ex);
+        return NotFound("Keep not found!");
+      }
+    }
+
 
     //constructor
     private readonly KeepRepository _keepRepo;

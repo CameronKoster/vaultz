@@ -12,7 +12,8 @@
           <h4>{{vault.description}}</h4>
         </div>
         <div>
-          <button onclick="//run viewKeep">View</button>
+          <!-- <button onclick="//run viewKeep">View</button> -->
+          <button @click="deleteVault(vault.id)">Delete</button>
         </div>
       </div>
     </div>
@@ -22,24 +23,35 @@
 <script>
   export default {
     name: 'vaults',
+    //Data
     data() {
       return {
 
       }
     },
+    //Props
     props: ["vault"],
+    //Components
     components: {
 
     },
+    //Computed
     computed: {
-
+      Vaults() {
+        return this.$store.state.userVaults
+      }
     },
+    //Mounted
     mounted() {
-      this.$store.state.userVaults;
+      this.$store.dispatch("getUserVaults")
     },
+    //Methods
     methods: {
       getUserVaults() {
         this.$store.dispatch("getUserVaults", userId)
+      },
+      deleteVault() {
+        this.$store.dispatch("deleteVault", vaultid)
       }
     }
   }

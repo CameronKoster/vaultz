@@ -98,27 +98,30 @@ export default new Vuex.Store({
         })
     },
 
-    // getUserKeeps({ commit, dispatch }, user) {
-    //   api.get("keeps/user", user) //check replacement for user
-    //     .then(res => {
-    //       commit("setUserKeeps", user)
-    //     })
+    getUserKeeps({ commit, dispatch }) {
+      api.get("keeps/user") //check replacement for user
+        .then(res => {
+          commit("setUserKeeps", res.data)
+        })
+    },
+
+    addKeep({ commit, dispatch }, keep) {
+      api.post("keeps", keep)
+        .then(res => {
+          dispatch("getUserKeeps", res.data)
+        })
+    },
+
+    // addKeepToVault() {
+
     // },
 
-    addPublicKeep({ commit, dispatch }, keep) {
-      api.post("keeps", keep)
+    deleteKeep({ commit, dispatch }, keepid) {
+      api.delete("keeps/" + keepid)
         .then(res => {
           dispatch("getPublicKeeps")
         })
     },
-
-    addKeepToVault() {
-
-    }
-
-    // deleteKeep({ commit, dispatch }, keep) {
-    //   api.delete("keeps/:keepid")
-    // },
 
 
 
@@ -134,9 +137,13 @@ export default new Vuex.Store({
         .then(res => {
           dispatch("getUserVaults")
         })
+    },
+    deleteVault({ commit, dispatch }, vaultid) { //need help with this
+      api.delete("vaults/" + vaultid)
+        .then(res => {
+          dispatch("getUserVaults")
+        })
+
     }
-
-
-
   }
 })

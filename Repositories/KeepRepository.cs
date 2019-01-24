@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using Dapper;
@@ -47,6 +48,25 @@ namespace Keepr.Repositories
     }
 
 
+    //EditKeep
+    public Keep EditKeep(int id, Keep newKeep)
+    {
+      try
+      {
+        return _db.QueryFirstOrDefault<Keep>(@"
+                UPDATE keeps SET
+                Name = @Name,
+                Description = @Description,
+                isPrivate = @isPrivate
+                WHERE id = @Id
+                ", newKeep);
+      }
+      catch (Exception ex)
+      {
+        Console.WriteLine(ex);
+        return null;
+      }
+    }
 
     //constructor
     private readonly IDbConnection _db;

@@ -4,6 +4,7 @@
     <div class="row">
       <Keeps v-for="keep in publicKeeps" :keep="keep" />
     </div>
+    <h1>no public keeps currently</h1>
   </div>
 </template>
 
@@ -39,7 +40,7 @@
     mounted() {
 
       if (!this.$store.state.user.id) {
-        this.$router.push({ name: "login" }); //blocks users not logged in
+        this.$router.push({ name: "home" }); //blocks users not logged in
       }
 
 

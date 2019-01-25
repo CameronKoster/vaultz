@@ -1,7 +1,7 @@
 <template>
   <div class="VaultKeeps">
     <Navbar />
-    <Keeps v-for="keep in vaultKeeps" :keep="keep" />
+    <Keeps v-for="keep in vaultKeeps" :keep="keep" :vaultKeep="true" />
   </div>
 </template>
 

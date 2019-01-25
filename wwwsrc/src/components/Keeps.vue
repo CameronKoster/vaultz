@@ -23,6 +23,7 @@
         </div>
 
         <i @click="deleteKeep(keep.id)" class="fas fa-trash-alt"></i>
+        <i v-if="vaultKeep" @click="deleteKeep(keep.id)" class="fas fa-trash-alt"></i>
         <!-- Need to do a v-if to display a modal of larger keep -->
       </div>
     </div>
@@ -56,7 +57,7 @@
         },
       }
     },
-    props: ["keep"],
+    props: ["keep", "vaultKeep"],
     components: {
 
     },
